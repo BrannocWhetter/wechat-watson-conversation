@@ -1,5 +1,8 @@
 'use strict';
 
+//ADDED FOR TEST
+const AssistantV2 = require('ibm-watson/assistant/v2');
+
 const Router = require('express-async-router').AsyncRouter;
 const { reply } = require('node-weixin-message');
 
@@ -18,10 +21,38 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
-  const { output: { text }, context } = await chat(message.Content, chatContext);
+  // TODO
+  // 1. try to retrieve `session_id` for the incoming user
+  // 2.1. If DNE, use the code below to create a new session, then persist with session storage
+  // 2.2. If exist, retrieve the session_id
+  // 3. Use the `chat` method to send text to watson assistant
+  // check what exactly the `createSession` return, since we just need to sessionId, not the entire respond body.
+  // const session = await constservice.createSession({
+  //   assistant_id: process.env.WATSON_ASSISTANT_ID
+  // });
+
+  //const { getSessionId } = "something here";
+
+  //const sessionId = await getSessionId(); // TODO
+  //const sessionId = await getSessionId() // TODO
+
+  //ADDED FOR TEST
+  const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
+  const sessionId = service.createSession({
+    assistant_id: process.env.WATSON_ASSISTANT_ID
+  })  
+  .then(res => {
+    console.log(JSON.stringify(res, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+  const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
 
   const storage = req.sessionStore;
-  storage.set(req.user, context);
+  //storage.set(req.user, context); //save session ID here
+  storage.set(req.user, context, sessionId);
 
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
@@ -29,3 +60,17 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+/*
+Extra stuff I was testing out:
+
+//--START--
+const cnvs = require('./conversation');
+
+const sessionId = await cnvs.assistantV2.createSession({assistant_id: process.env.WATSON_ASSISTANT_ID});
+//--END--
+
+//--START--
+
+//--END--
+*/

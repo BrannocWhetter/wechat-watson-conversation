@@ -1,17 +1,28 @@
+//remove workspace_id
+//version_date: '2017-05-26',
+
+//parameterise the URL using region codes
+
+//remove username/password for IAM keys
+
 'use strict';
 
 const ENV = process.env;
 
+//Brannoc Whetter - Added Assistant_ID EnvVar, removed Workspace_ID
 module.exports = {
   wechat: {
     token: ENV.WECHAT_TOKEN,
     encodingAESKey: ENV.WECHAT_ENCODING_AES_KEY,
   },
   watsonConversation: {
-    workspace_id: ENV.WATSON_WORKSPACE_ID,
     username: ENV.WATSON_USERNAME,
     password: ENV.WATSON_PASSWORD,
-    url: 'https://gateway.watsonplatform.net/conversation/api/',
-    version_date: '2017-05-26',
+
+    assistant_id: ENV.WATSON_ASSISTANT_ID,
+
+    apikey: ENV.WATSON_API_KEY,
+    url: 'https://gateway-syd.watsonplatform.net/assistant/api',
+    version: '2019-02-28',
   },
 };

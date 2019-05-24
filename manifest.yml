@@ -1,4 +1,4 @@
 applications:
-- name: wechat-watson-conversation
+- name: Watson WeChat
   random-route: false
   memory: 256M

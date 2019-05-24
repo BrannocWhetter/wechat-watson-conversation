@@ -17,6 +17,7 @@
     "express": "^4.16.2",
     "express-async-router": "^0.1.13",
     "express-session": "^1.15.6",
+    "ibm-watson": "^4.0.1",
     "memorystore": "^1.6.0",
     "node-weixin-message": "^0.1.1",
     "wechat-watson-conversation": "file:./lib/wechat-watson-conversation"
