@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
   //ADDED FOR TEST
   const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
-  const { session_id } = await service.createSession({
+  const { session_id : sessionId } = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID
   })   // assuming the return response is a json object and session_id is under the key `session_id`
   .then(res => {
