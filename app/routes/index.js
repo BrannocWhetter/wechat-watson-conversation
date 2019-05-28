@@ -32,15 +32,13 @@ router.post('/', async (req, res) => {
   // });
 
   //const { getSessionId } = "something here";
-
-  //const sessionId = await getSessionId(); // TODO
   //const sessionId = await getSessionId() // TODO
 
-  //ADDED FOR TEST
+  //const { session_id : sessionId } = ...;
   const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
-  const { session_id : sessionId } = await service.createSession({
+  const sessionId = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID
-  })   // assuming the return response is a json object and session_id is under the key `session_id`
+  })
   .then(res => {
     console.log(JSON.stringify(res, null, 2));
   })
@@ -52,7 +50,8 @@ router.post('/', async (req, res) => {
 
   const storage = req.sessionStore;
   //storage.set(req.user, context); //save session ID here
-  storage.set(req.user, context, sessionId);
+  storage.set(req.user, context); //Saves the context to storage
+  storage.set(req.user, sessionId); //Saves the session ID to storage
 
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
@@ -81,5 +80,20 @@ const sessionId = await cnvs.assistantV2.createSession({assistant_id: process.en
   .catch(err => {
     console.log(err);
   });
+//--END--
+
+//--START--
+  //ADDED FOR TEST
+  const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
+  const { session_id : sessionId } = await service.createSession({
+    assistant_id: process.env.WATSON_ASSISTANT_ID
+  })   // assuming the return response is a json object and session_id is under the key `session_id`
+  .then(res => {
+    console.log(JSON.stringify(res, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
 //--END--
 */
