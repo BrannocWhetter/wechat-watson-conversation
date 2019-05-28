@@ -1,6 +1,9 @@
 # wechat-watson-conversation
 Watson Conversation integration in wechat for ExpressJS.
 
+## Warning
+This software is currently under conversion to Watson Assistant V2 and the new API, it may not function as intended.
+
 ## Usage
 ### Install
 ```bash
@@ -65,4 +68,4 @@ The library also exposes each individual middleware if you prefer more flexbilit
 - `yarn dev`
 
 ## Author
-- IBM Cognitive Class, IBM Digital Business Group
+- IBM Cognitive Class, IBM Digital Business Group & Brannoc Whetter
