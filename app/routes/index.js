@@ -21,18 +21,7 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
-  // TODO
-  // 1. try to retrieve `session_id` for the incoming user
-  // 2.1. If DNE, use the code below to create a new session, then persist with session storage
-  // 2.2. If exist, retrieve the session_id
-  // 3. Use the `chat` method to send text to watson assistant
-  // check what exactly the `createSession` return, since we just need to sessionId, not the entire respond body.
-  // const session = await constservice.createSession({
-  //   assistant_id: process.env.WATSON_ASSISTANT_ID
-  // });
-
-  //const { getSessionId } = "something here";
-  //const sessionId = await getSessionId() // TODO
+  //TODO GOES HERE
 
   //const { session_id : sessionId } = ...;
   const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
@@ -65,6 +54,20 @@ router.post('/', async (req, res) => {
 module.exports = router;
 
 /*
+
+  // TODO
+  // 1. try to retrieve `session_id` for the incoming user
+  // 2.1. If DNE, use the code below to create a new session, then persist with session storage
+  // 2.2. If exist, retrieve the session_id
+  // 3. Use the `chat` method to send text to watson assistant
+  // check what exactly the `createSession` return, since we just need to sessionId, not the entire respond body.
+  // const session = await constservice.createSession({
+  //   assistant_id: process.env.WATSON_ASSISTANT_ID
+  // });
+
+  //const { getSessionId } = "something here";
+  //const sessionId = await getSessionId() // TODO
+
 Extra stuff I was testing out:
 
 //--START--
