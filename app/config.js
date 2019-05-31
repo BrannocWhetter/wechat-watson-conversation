@@ -1,6 +1,3 @@
-//remove workspace_id
-//version_date: '2017-05-26',
-
 //parameterise the URL using region codes
 
 //remove username/password for IAM keys
@@ -13,7 +10,6 @@ const ENV = process.env;
 module.exports = {
   wechat: {
     token: ENV.WECHAT_TOKEN,
-    encodingAESKey: ENV.WECHAT_ENCODING_AES_KEY,
   },
   watsonConversation: {
     username: ENV.WATSON_USERNAME,
@@ -26,3 +22,5 @@ module.exports = {
     version: '2019-02-28',
   },
 };
+
+//wchat:    encodingAESKey: ENV.WECHAT_ENCODING_AES_KEY,

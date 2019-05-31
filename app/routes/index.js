@@ -56,6 +56,10 @@ router.post('/', async (req, res) => {
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
   res.send(response);
+
+  //Export sessionId variable to access in conversation.js
+  exports.sessionId = sessionId;
+
 });
 
 module.exports = router;
