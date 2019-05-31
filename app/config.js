@@ -22,5 +22,3 @@ module.exports = {
     version: '2019-02-28',
   },
 };
-
-//wchat:    encodingAESKey: ENV.WECHAT_ENCODING_AES_KEY,
