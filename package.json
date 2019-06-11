@@ -1,12 +1,12 @@
 {
   "name": "wechat-watson-conversation",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "index.js",
   "repository": "git@github.com:cognitive-class/wechat-watson-conversation.git",
   "author": "Michael Lin <michael.lin1@ibm.com>",
   "license": "MIT",
   "engines": {
-    "node": "8.9.4"
+    "node": "9.10.1"
   },
   "scripts": {
     "dev": "nodemon -w . --exec \"node app\"",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@apset/eslint-config-apset": "file:./lib/eslint-config-apset",
-    "eslint": "^4.18.2",
+    "eslint": "^5.16.0",
     "nodemon": "^1.17.1"
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-//ADDED FOR TEST
+// ADDED FOR TEST
 const AssistantV2 = require('ibm-watson/assistant/v2');
 
 const Router = require('express-async-router').AsyncRouter;
@@ -21,34 +21,38 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
-  //TODO GOES HERE
+  // TODO GOES HERE
 
-  //const { session_id : sessionId } = ...;
-  const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
-  const sessionId = await service.createSession({
-    assistant_id: process.env.WATSON_ASSISTANT_ID
-  })
-  .then(res => {
-    console.log(JSON.stringify(res, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
+  const service = new AssistantV2({
+    iam_apikey: process.env.WATSON_API_KEY, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
   });
+  // TODO: stringify the result - using JSON.stringify as below
+  const sessionId = await service.createSession({
+    assistant_id: process.env.WATSON_ASSISTANT_ID,
+  })
+    // eslint-disable-next-line no-shadow
+    .then(res => {
+      console.log(JSON.stringify(res, null, 2));
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
   const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
 
   const storage = req.sessionStore;
-  //storage.set(req.user, context); //save session ID here
-  storage.set(req.user, context); //Saves the context to storage
-  storage.set(req.user, sessionId); //Saves the session ID to storage
+  // storage.set(req.user, context); // save session ID here
+  storage.set(req.user, context); // Saves the context to storage
+  storage.set(req.user, sessionId); // Saves the session ID to storage
 
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
   res.send(response);
 
-  //Export sessionId variable to access in conversation.js
+  // Export sessionId variable to access in conversation.js
   exports.sessionId = sessionId;
 
+  console.error('SessionID from Index.js: %d', sessionId);
 });
 
 module.exports = router;
@@ -70,6 +74,11 @@ module.exports = router;
 
 Extra stuff I was testing out:
 
+  const service = new AssistantV2({
+    username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
+  });
+
+
 //--START--
 const cnvs = require('./conversation');
 
@@ -80,7 +89,7 @@ const sessionId = await cnvs.assistantV2.createSession({assistant_id: process.en
   const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
   const sessionId = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID
-  })  
+  })
   .then(res => {
     console.log(JSON.stringify(res, null, 2));
   })
