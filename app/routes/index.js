@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
   const service = new AssistantV2({
     iam_apikey: process.env.WATSON_API_KEY, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
   });
-  // NEED TO DO: Stringify the result - using JSON.stringify as below
+  // NEED TO DO: Stringify the result - using JSON.stringify as below or JSON.parse
   const sessionId = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID,
   })
@@ -38,21 +38,23 @@ router.post('/', async (req, res) => {
       console.log(err);
     });
 
-  const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
+  const _sIdParsed = JSON.parse(sessionId);
+
+  const { output: { text }, context } = await chat(message.Content, chatContext, _sIdParsed.session_id);
 
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
   storage.set(req.user, context); // Saves the context to storage
-  storage.set(req.user, sessionId); // Saves the session ID to storage
+  storage.set(req.user, _sIdParsed.session_id); // Saves the session ID to storage
 
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
   res.send(response);
 
   // Export sessionId variable to access in conversation.js
-  exports.sessionId = sessionId;
+  exports.sessionId = _sIdParsed.session_id;
 
-  console.error('SessionID from Index.js: %d', sessionId);
+  // console.log('SessionID from Index.js: %d', _sIdParsed.session_id);
 });
 
 module.exports = router;
