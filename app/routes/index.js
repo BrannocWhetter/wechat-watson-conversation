@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
   const service = new AssistantV2({
     iam_apikey: process.env.WATSON_API_KEY, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
   });
-  // TODO: stringify the result - using JSON.stringify as below
+  // NEED TO DO: Stringify the result - using JSON.stringify as below
   const sessionId = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID,
   })
@@ -69,47 +69,4 @@ module.exports = router;
   //   assistant_id: process.env.WATSON_ASSISTANT_ID
   // });
 
-  //const { getSessionId } = "something here";
-  //const sessionId = await getSessionId() // TODO
-
-Extra stuff I was testing out:
-
-  const service = new AssistantV2({
-    username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
-  });
-
-
-//--START--
-const cnvs = require('./conversation');
-
-const sessionId = await cnvs.assistantV2.createSession({assistant_id: process.env.WATSON_ASSISTANT_ID});
-//--END--
-
-//--START--
-  const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
-  const sessionId = await service.createSession({
-    assistant_id: process.env.WATSON_ASSISTANT_ID
-  })
-  .then(res => {
-    console.log(JSON.stringify(res, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-//--END--
-
-//--START--
-  //ADDED FOR TEST
-  const service = new AssistantV2({username: process.env.WATSON_USERNAME, password: process.env.WATSON_PASSWORD, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api'});
-  const { session_id : sessionId } = await service.createSession({
-    assistant_id: process.env.WATSON_ASSISTANT_ID
-  })   // assuming the return response is a json object and session_id is under the key `session_id`
-  .then(res => {
-    console.log(JSON.stringify(res, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-//--END--
 */
