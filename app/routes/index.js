@@ -26,18 +26,12 @@ router.post('/', async (req, res) => {
   const service = new AssistantV2({
     iam_apikey: process.env.WATSON_API_KEY, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
   });
-  // NEED TO DO: Stringify the result - using JSON.stringify as below or JSON.parse
-  /*
-  const sessionId = await service.createSession({
-    assistant_id: process.env.WATSON_ASSISTANT_ID,
-  });
-*/
+
   // eslint-disable-next-line no-shadow
-  const { session_id: sessionId } = await service.createSession({ assistant_id: process.env.WATSON_ASSISTANT_ID }).then(res => JSON.parse(res));
+  const { session_id: sessionId } = await service.createSession({ assistant_id: process.env.WATSON_ASSISTANT_ID });
 
-  console.error(sessionId);
+  console.log(sessionId);
 
-  // const sessionIdObj = sessionId.session_id;
   // console.log('SessionID from Index.js: %d', sessionIdObj);
 
   const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
@@ -71,6 +65,3 @@ module.exports = router;
 
 */
 
-/* const _sIdParsed = JSON.parse(sessionId);
-
-*/
