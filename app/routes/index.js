@@ -27,34 +27,32 @@ router.post('/', async (req, res) => {
     iam_apikey: process.env.WATSON_API_KEY, version: '2019-02-28', url: 'https://gateway-syd.watsonplatform.net/assistant/api',
   });
   // NEED TO DO: Stringify the result - using JSON.stringify as below or JSON.parse
+  /*
   const sessionId = await service.createSession({
     assistant_id: process.env.WATSON_ASSISTANT_ID,
-  })
-    // eslint-disable-next-line no-shadow
-    .then(res => {
-      console.log(JSON.stringify(res, null, 2));
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  });
+*/
+  // eslint-disable-next-line no-shadow
+  const { session_id: sessionId } = await service.createSession({ assistant_id: process.env.WATSON_ASSISTANT_ID }).then(res => JSON.parse(res));
 
-  const _sIdParsed = JSON.parse(sessionId);
+  console.error(sessionId);
 
-  const { output: { text }, context } = await chat(message.Content, chatContext, _sIdParsed.session_id);
+  // const sessionIdObj = sessionId.session_id;
+  // console.log('SessionID from Index.js: %d', sessionIdObj);
+
+  const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
 
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
   storage.set(req.user, context); // Saves the context to storage
-  storage.set(req.user, _sIdParsed.session_id); // Saves the session ID to storage
+  storage.set(req.user, sessionId); // Saves the session ID to storage
 
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
   res.send(response);
 
   // Export sessionId variable to access in conversation.js
-  exports.sessionId = _sIdParsed.session_id;
-
-  // console.log('SessionID from Index.js: %d', _sIdParsed.session_id);
+  exports.sessionId = sessionId;
 });
 
 module.exports = router;
@@ -70,5 +68,9 @@ module.exports = router;
   // const session = await constservice.createSession({
   //   assistant_id: process.env.WATSON_ASSISTANT_ID
   // });
+
+*/
+
+/* const _sIdParsed = JSON.parse(sessionId);
 
 */
