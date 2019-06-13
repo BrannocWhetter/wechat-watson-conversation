@@ -21,15 +21,11 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
-<<<<<<< HEAD
-  console.log(message);
-=======
 
-  console.log("First round prints");
+  console.log('First round prints');
   console.log(message);
   console.log(message.Content);
   console.log(chatContext);
->>>>>>> origin/master
 
   // TODO GOES HERE
 
@@ -47,14 +43,10 @@ router.post('/', async (req, res) => {
   // need to change payload of chat to correctly access message values etc.
   const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
 
-<<<<<<< HEAD
-  console.log(message.Content);
-=======
-  console.log("Second round prints");
+  console.log('Second round prints');
   console.log(message);
   console.log(message.Content);
   console.log(context);
->>>>>>> origin/master
   console.log(text);
 
   const storage = req.sessionStore;
@@ -66,7 +58,7 @@ router.post('/', async (req, res) => {
   res.set('Content-Type', 'text/xml');
   res.send(response);
 
-  console.log("Third round prints");
+  console.log('Third round prints');
   console.log(message);
   console.log(message.Content);
   console.log(context);
