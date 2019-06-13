@@ -21,6 +21,8 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
+  console.log(message);
+
   // TODO GOES HERE
 
   const service = new AssistantV2({
@@ -34,7 +36,11 @@ router.post('/', async (req, res) => {
 
   // console.log('SessionID from Index.js: %d', sessionIdObj);
 
+  // need to change payload of chat to correctly access message values etc.
   const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
+
+  console.log(message.Content);
+  console.log(text);
 
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
