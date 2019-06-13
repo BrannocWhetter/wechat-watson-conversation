@@ -21,6 +21,11 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
+
+  console.log("First round prints");
+  console.log(message);
+  console.log(message.Content);
+
   // TODO GOES HERE
 
   const service = new AssistantV2({
@@ -36,6 +41,11 @@ router.post('/', async (req, res) => {
 
   const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
 
+  console.log("Second round prints");
+  console.log(message);
+  console.log(message.Content);
+  console.log(context);
+
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
   storage.set(req.user, context); // Saves the context to storage
@@ -44,6 +54,12 @@ router.post('/', async (req, res) => {
   const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
   res.set('Content-Type', 'text/xml');
   res.send(response);
+
+  console.log("Third round prints");
+  console.log(message);
+  console.log(message.Content);
+  console.log(context);
+  console.log(response);
 
   // Export sessionId variable to access in conversation.js
   exports.sessionId = sessionId;
