@@ -1,7 +1,5 @@
 // parameterise the URL using region codes
 
-// remove username/password for IAM keys
-
 'use strict';
 
 const ENV = process.env;
