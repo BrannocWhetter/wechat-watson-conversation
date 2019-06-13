@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
   console.log("First round prints");
   console.log(message);
   console.log(message.Content);
+  console.log(chatContext);
 
   // TODO GOES HERE
 
@@ -45,6 +46,7 @@ router.post('/', async (req, res) => {
   console.log(message);
   console.log(message.Content);
   console.log(context);
+  console.log(text);
 
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
