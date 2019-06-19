@@ -71,7 +71,6 @@ router.post('/', async (req, res) => {
 module.exports = router;
 
 /*
-
   // TODO
   // 1. try to retrieve `session_id` for the incoming user
   // 2.1. If DNE, use the code below to create a new session, then persist with session storage
@@ -81,6 +80,5 @@ module.exports = router;
   // const session = await constservice.createSession({
   //   assistant_id: process.env.WATSON_ASSISTANT_ID
   // });
-
 */
 
