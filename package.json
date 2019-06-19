@@ -5,6 +5,9 @@
   "repository": "git@github.com:cognitive-class/wechat-watson-conversation.git",
   "author": "Michael Lin <michael.lin1@ibm.com>",
   "license": "MIT",
+  "engines": {
+    "node": "9.10.1"
+  },
   "scripts": {
     "dev": "nodemon -w . --exec \"node app\"",
     "start": "node app",
