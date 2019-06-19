@@ -2,6 +2,8 @@
 
 'use strict';
 
+require('dotenv').config();
+
 const ENV = process.env;
 
 // Brannoc Whetter - Added Assistant_ID EnvVar, removed Workspace_ID

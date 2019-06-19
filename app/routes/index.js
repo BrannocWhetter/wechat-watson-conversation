@@ -21,12 +21,6 @@ router.post('/', async (req, res) => {
   const { message, chatContext } = req;
   const { chat } = req.app.locals;
 
-
-  console.log('First round prints');
-  console.log(message);
-  console.log(message.Content);
-  console.log(chatContext);
-
   // TODO GOES HERE
 
   const service = new AssistantV2({
@@ -36,49 +30,19 @@ router.post('/', async (req, res) => {
   // eslint-disable-next-line no-shadow
   const { session_id: sessionId } = await service.createSession({ assistant_id: process.env.WATSON_ASSISTANT_ID });
 
-  console.log(sessionId);
-
-  // console.log('SessionID from Index.js: %d', sessionIdObj);
-
   // need to change payload of chat to correctly access message values etc.
-  const { output: { text }, context } = await chat(message.Content, chatContext, sessionId);
+  const payload = await chat(message.Content, chatContext, sessionId);
 
-  console.log('Second round prints');
-  console.log(message);
-  console.log(message.Content);
-  console.log(context);
-  console.log(text);
+  const { text } = payload.output.generic[0];
 
   const storage = req.sessionStore;
   // storage.set(req.user, context); // save session ID here
-  storage.set(req.user, context); // Saves the context to storage
+  storage.set(req.user, payload.context); // Saves the context to storage
   storage.set(req.user, sessionId); // Saves the session ID to storage
 
-  const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
+  const response = reply.text(message.ToUserName, message.FromUserName, text);
   res.set('Content-Type', 'text/xml');
   res.send(response);
-
-  console.log('Third round prints');
-  console.log(message);
-  console.log(message.Content);
-  console.log(context);
-  console.log(response);
-
-  // Export sessionId variable to access in conversation.js
-  exports.sessionId = sessionId;
 });
 
 module.exports = router;
-
-/*
-  // TODO
-  // 1. try to retrieve `session_id` for the incoming user
-  // 2.1. If DNE, use the code below to create a new session, then persist with session storage
-  // 2.2. If exist, retrieve the session_id
-  // 3. Use the `chat` method to send text to watson assistant
-  // check what exactly the `createSession` return, since we just need to sessionId, not the entire respond body.
-  // const session = await constservice.createSession({
-  //   assistant_id: process.env.WATSON_ASSISTANT_ID
-  // });
-*/
-
