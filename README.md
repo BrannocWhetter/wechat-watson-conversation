@@ -5,48 +5,8 @@ Watson Conversation integration in wechat for ExpressJS.
 This software is currently under conversion to Watson Assistant V2 and the new API, it may not function as intended.
 
 ## Usage
-### Install
-```bash
-yarn add wechat-watson-conversation
-```
-OR
-```bash
-npm i wechat-watson-conversation
-```
-
-### Example
-Detail example is also avaliable [here](app/).
-```js
-const { wechatWatconConversation } = requir ('wechat-watson-conversation');
-
-const ENV = process.env;
-const config = {
-  wechat: {
-    token: ENV.WECHAT_TOKEN,
-    encodingAESKey: ENV.WECHAT_ENCODING_AES_KEY,
-  },
-  watsonConversation: {
-    workspace_id: ENV.WATSON_WORKSPACE_ID,
-    username: ENV.WATSON_USERNAME,
-    password: ENV.WATSON_PASSWORD,
-  },
-};
-
-wechatWatconConversation(app, config, '/path');
-
-app.post('/path', async (req, res) => {
-  const { message, chatContext } = req; // Retrieve incoming message, and previous chat context is exist.
-  const { chat } = req.app.locals; // Watson conversation message method
-
-  const { output: { text }, context } = await chat(message.Content, chatContext);
-  const storage = req.sessionStore;
-  storage.set(req.user, context);
-
-  const response = reply.text(message.ToUserName, message.FromUserName, text[0]);
-  res.set('Content-Type', 'text/xml');
-  res.send(response);
-})
-```
+### Install and Setup
+See documentation [here](#) for detailed deployment instructions.
 
 ### Modules
 The library also exposes each individual middleware if you prefer more flexbility.
@@ -62,11 +22,6 @@ The library also exposes each individual middleware if you prefer more flexbilit
 - Yarn
 - [Autoenv](https://github.com/kennethreitz/autoenv)
 
-### Setup
-- `cp .env.example .env`
-- `yarn install`
-- `yarn dev`
-
 ## Author
 - Brannoc Whetter - Forked from content originally developed by IBM Cognitive Class, IBM Digital Business Group
-- Appreciaton to Michael Lin [@ExiaSR](https://github.com/ExiaSR) for all his help during the redevelopment process.
+- Appreciaton to Michael Lin ([@ExiaSR](https://github.com/ExiaSR)) for all his help during the redevelopment process.
