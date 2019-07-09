@@ -69,3 +69,4 @@ The library also exposes each individual middleware if you prefer more flexbilit
 
 ## Author
 - Brannoc Whetter - Forked from content originally developed by IBM Cognitive Class, IBM Digital Business Group
+- Appreciaton to Michael Lin @ExiaSR for all his help during the redevelopment process.
