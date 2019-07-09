@@ -68,4 +68,4 @@ The library also exposes each individual middleware if you prefer more flexbilit
 - `yarn dev`
 
 ## Author
-- IBM Cognitive Class, IBM Digital Business Group & Brannoc Whetter
+- Brannoc Whetter - Forked from content originally developed by IBM Cognitive Class, IBM Digital Business Group
